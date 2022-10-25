@@ -1,10 +1,6 @@
 import React, {forwardRef} from 'react';
 import classNames from 'classnames';
-
-import {Handle, Remove} from '../Item';
-
 import styles from './Container.module.scss';
-import ColumnBody from '../column-body';
 import ColumnHeader from '../column-header';
 
 export interface Props {
