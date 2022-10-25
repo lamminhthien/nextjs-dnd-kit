@@ -28,15 +28,12 @@ import {
 import {createPortal, unstable_batchedUpdates} from 'react-dom';
 import {Item} from '../../components/Item';
 import {Container} from '../../components/Container';
-import useMCHook, {SortableItemProps} from './hook';
-import {DropAnimation} from '@dnd-kit/core';
 import {dropAnimation} from '../../utilities/drop-animation';
-import {PLACEHOLDER_ID, TRASH_ID} from '../../utilities/constant';
+import {empty, PLACEHOLDER_ID, TRASH_ID} from '../../utilities/constant';
 import {Items} from '../../store/type';
-
-const {animateLayoutChanges, empty, DroppableContainer, getColor, useMountStatus, SortableItem} =
-  // eslint-disable-next-line react-hooks/rules-of-hooks
-  useMCHook();
+import SortableItem from '../../components/sortable-item';
+import getColor from '../../utilities/get-color';
+import DroppableContainer from '../../components/droppable-container';
 
 export default function MultipleContainers({
   adjustScale = false,
