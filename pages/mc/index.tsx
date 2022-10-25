@@ -1,5 +1,5 @@
 import React, {useCallback, useEffect, useRef, useState} from 'react';
-import {coordinateGetter as multipleContainersCoordinateGetter} from '../../sensors/multipleContainersKeyboardCoordinates';
+import {coordinateGetter as multipleContainersCoordinateGetter} from '../../dnd-kit/sensors/multipleContainersKeyboardCoordinates';
 import {
   arrayMove,
   SortableContext,
@@ -8,7 +8,7 @@ import {
   horizontalListSortingStrategy
 } from '@dnd-kit/sortable';
 import {IPropsMultiContainer} from '../../styles/prop.type';
-import {createRange} from '../../utilities/createRange';
+import {createRange} from '../../dnd-kit/utilities/createRange';
 import {
   closestCenter,
   CollisionDetection,
@@ -28,11 +28,11 @@ import {
 import {createPortal, unstable_batchedUpdates} from 'react-dom';
 import {Item} from '../../dnd-kit/components/Item';
 import {Container} from '../../dnd-kit/components/container';
-import {dropAnimation} from '../../utilities/drop-animation';
-import {empty, PLACEHOLDER_ID, TRASH_ID} from '../../utilities/constant';
+import {dropAnimation} from '../../dnd-kit/utilities/drop-animation';
+import {empty, PLACEHOLDER_ID, TRASH_ID} from '../../dnd-kit/utilities/constant';
 import {Items} from '../../store/type';
 import SortableItem from '../../dnd-kit/components/sortable-item';
-import getColor from '../../utilities/get-color';
+import getColor from '../../dnd-kit/utilities/get-color';
 import DroppableContainer from '../../dnd-kit/components/droppable-container';
 
 export default function MultipleContainers({

@@ -1,7 +1,7 @@
 import {useSortable} from '@dnd-kit/sortable';
 import {SortableItemProps} from '../../../store/type';
-import getColor from '../../../utilities/get-color';
-import useMountStatus from '../../../utilities/use-mount-status';
+import getColor from '../../utilities/get-color';
+import useMountStatus from '../../utilities/use-mount-status';
 import {Item} from '../Item';
 
 export default function SortableItem({

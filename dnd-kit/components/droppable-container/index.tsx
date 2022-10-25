@@ -1,7 +1,7 @@
 import {UniqueIdentifier} from '@dnd-kit/core';
 import {Container, ContainerProps} from '../container';
-import {animateLayoutChanges} from '../../../utilities/animate-layout-change';
-import {CSS} from '../../../utilities/css';
+import {animateLayoutChanges} from '../../utilities/animate-layout-change';
+import {CSS} from '../../utilities/css';
 import {useSortable} from '@dnd-kit/sortable';
 
 export default function DroppableContainer({
