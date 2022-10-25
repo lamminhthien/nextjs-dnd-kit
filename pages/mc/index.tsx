@@ -260,14 +260,18 @@ export default function MultipleContainers({
     setClonedItems(null);
   };
 
+  const [isDocument, setIsDocument] = useState<Boolean>(false);
+
   useEffect(() => {
     requestAnimationFrame(() => {
       recentlyMovedToNewContainer.current = false;
     });
+    if (typeof window !== 'undefined') setIsDocument(true);
   }, [items]);
   // if (typeof window === undefined) return <>ABCD</>;
+  if (!isDocument) return <p>Please waiting for Loading DND-KIT Multi column</p>;
 
-  if (typeof window !== 'undefined')
+  if (isDocument)
     return (
       <DndContext
         sensors={sensors}
