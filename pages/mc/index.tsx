@@ -19,7 +19,6 @@ import {
   rectIntersection,
   TouchSensor,
   UniqueIdentifier,
-  useDroppable,
   useSensor,
   KeyboardSensor,
   DndContext,
@@ -28,27 +27,21 @@ import {
 } from '@dnd-kit/core';
 import {createPortal, unstable_batchedUpdates} from 'react-dom';
 import {Item} from '../../components/Item';
-import {Container, ContainerProps} from '../../components/Container';
-import {CSS} from '@dnd-kit/utilities';
+import {Container} from '../../components/Container';
 import useMCHook, {Items} from './hook';
 
-// eslint-disable-next-line react-hooks/rules-of-hooks
-const {PLACEHOLDER_ID, TRASH_ID, animateLayoutChanges, empty, dropAnimation, DroppableContainer} = useMCHook();
-
-function getColor(id: UniqueIdentifier) {
-  switch (String(id)[0]) {
-    case 'A':
-      return '#7193f0';
-    case 'B':
-      return '#ffda6c';
-    case 'C':
-      return '#00bcd4';
-    case 'D':
-      return '#ef769f';
-  }
-
-  return undefined;
-}
+const {
+  PLACEHOLDER_ID,
+  TRASH_ID,
+  animateLayoutChanges,
+  empty,
+  dropAnimation,
+  DroppableContainer,
+  getColor,
+  useMountStatus
+} =
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  useMCHook();
 
 export default function MultipleContainers({
   adjustScale = false,
@@ -400,7 +393,6 @@ export default function MultipleContainers({
           </DragOverlay>,
           document.body
         )}
-        {trashable && activeId && !containers.includes(activeId) ? <Trash id={TRASH_ID} /> : null}
       </DndContext>
     );
 
@@ -539,43 +531,4 @@ function SortableItem({
       renderItem={renderItem}
     />
   );
-}
-
-function Trash({id}: {id: UniqueIdentifier}) {
-  const {setNodeRef, isOver} = useDroppable({
-    id
-  });
-
-  return (
-    <div
-      ref={setNodeRef}
-      style={{
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        position: 'fixed',
-        left: '50%',
-        marginLeft: -150,
-        bottom: 20,
-        width: 300,
-        height: 60,
-        borderRadius: 5,
-        border: '2px solid',
-        borderColor: isOver ? 'red' : '#DDD'
-      }}>
-      Drop here to delete
-    </div>
-  );
-}
-
-function useMountStatus() {
-  const [isMounted, setIsMounted] = useState(false);
-
-  useEffect(() => {
-    const timeout = setTimeout(() => setIsMounted(true), 500);
-
-    return () => clearTimeout(timeout);
-  }, []);
-
-  return isMounted;
 }

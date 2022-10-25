@@ -2,6 +2,7 @@ import {defaultDropAnimationSideEffects, DropAnimation, UniqueIdentifier} from '
 import {AnimateLayoutChanges, defaultAnimateLayoutChanges, useSortable} from '@dnd-kit/sortable';
 import {Container, ContainerProps} from '../../components/Container';
 import {CSS} from '@dnd-kit/utilities';
+import {useEffect, useState} from 'react';
 
 export const TRASH_ID = 'void';
 const PLACEHOLDER_ID = 'placeholder';
@@ -67,6 +68,42 @@ function DroppableContainer({
   );
 }
 
+function getColor(id: UniqueIdentifier) {
+  switch (String(id)[0]) {
+    case 'A':
+      return '#7193f0';
+    case 'B':
+      return '#ffda6c';
+    case 'C':
+      return '#00bcd4';
+    case 'D':
+      return '#ef769f';
+  }
+
+  return undefined;
+}
+
+function useMountStatus() {
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    const timeout = setTimeout(() => setIsMounted(true), 500);
+
+    return () => clearTimeout(timeout);
+  }, []);
+
+  return isMounted;
+}
+
 export default function useMCHook() {
-  return {TRASH_ID, PLACEHOLDER_ID, animateLayoutChanges, empty, dropAnimation, DroppableContainer};
+  return {
+    TRASH_ID,
+    PLACEHOLDER_ID,
+    animateLayoutChanges,
+    empty,
+    dropAnimation,
+    DroppableContainer,
+    getColor,
+    useMountStatus
+  };
 }
