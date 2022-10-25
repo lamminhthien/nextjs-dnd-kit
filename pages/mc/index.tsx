@@ -1,7 +1,9 @@
 import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {coordinateGetter as multipleContainersCoordinateGetter} from './multipleContainersKeyboardCoordinates';
 import {
+  AnimateLayoutChanges,
   arrayMove,
+  defaultAnimateLayoutChanges,
   horizontalListSortingStrategy,
   SortableContext,
   useSortable,
@@ -30,13 +32,16 @@ import {
 } from '@dnd-kit/core';
 import {createPortal, unstable_batchedUpdates} from 'react-dom';
 import {Item} from '../../components/Item';
-import {Container} from '../../components/Container';
+import {Container, ContainerProps} from '../../components/Container';
+import {CSS} from '@dnd-kit/utilities';
 
 export type Items = Record<UniqueIdentifier, UniqueIdentifier[]>;
 
 export const TRASH_ID = 'void';
 const PLACEHOLDER_ID = 'placeholder';
 const empty: UniqueIdentifier[] = [];
+
+const animateLayoutChanges: AnimateLayoutChanges = args => defaultAnimateLayoutChanges({...args, wasDragging: true});
 
 function DroppableContainer({
   children,
