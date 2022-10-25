@@ -1,25 +1,18 @@
 import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {coordinateGetter as multipleContainersCoordinateGetter} from './multipleContainersKeyboardCoordinates';
 import {
-  AnimateLayoutChanges,
   arrayMove,
-  defaultAnimateLayoutChanges,
-  horizontalListSortingStrategy,
   SortableContext,
   useSortable,
-  verticalListSortingStrategy
+  verticalListSortingStrategy,
+  horizontalListSortingStrategy
 } from '@dnd-kit/sortable';
 import {IPropsMultiContainer} from './prop.type';
 import {createRange} from '../../utilities/createRange';
 import {
   closestCenter,
   CollisionDetection,
-  defaultDropAnimationSideEffects,
-  DndContext,
   DragOverlay,
-  DropAnimation,
-  getFirstCollision,
-  KeyboardSensor,
   MeasuringStrategy,
   MouseSensor,
   pointerWithin,
@@ -28,75 +21,19 @@ import {
   UniqueIdentifier,
   useDroppable,
   useSensor,
-  useSensors
+  KeyboardSensor,
+  DndContext,
+  useSensors,
+  getFirstCollision
 } from '@dnd-kit/core';
 import {createPortal, unstable_batchedUpdates} from 'react-dom';
 import {Item} from '../../components/Item';
 import {Container, ContainerProps} from '../../components/Container';
 import {CSS} from '@dnd-kit/utilities';
-import useMCHook from './hook';
+import useMCHook, {Items} from './hook';
 
 // eslint-disable-next-line react-hooks/rules-of-hooks
-const {PLACEHOLDER_ID, TRASH_ID, animateLayoutChanges, empty} = useMCHook();
-
-export type Items = Record<UniqueIdentifier, UniqueIdentifier[]>;
-
-function DroppableContainer({
-  children,
-  columns = 1,
-  disabled,
-  id,
-  items,
-  style,
-  ...props
-}: ContainerProps & {
-  disabled?: boolean;
-  id: UniqueIdentifier;
-  items: UniqueIdentifier[];
-  style?: React.CSSProperties;
-}) {
-  const {active, attributes, isDragging, listeners, over, setNodeRef, transition, transform} = useSortable({
-    id,
-    data: {
-      type: 'container',
-      children: items
-    },
-    animateLayoutChanges
-  });
-  const isOverContainer = over
-    ? (id === over.id && active?.data.current?.type !== 'container') || items.includes(over.id)
-    : false;
-
-  return (
-    <Container
-      ref={disabled ? undefined : setNodeRef}
-      style={{
-        ...style,
-        transition,
-        transform: CSS.Translate.toString(transform),
-        opacity: isDragging ? 0.5 : undefined
-      }}
-      hover={isOverContainer}
-      handleProps={{
-        ...attributes,
-        ...listeners
-      }}
-      columns={columns}
-      {...props}>
-      {children}
-    </Container>
-  );
-}
-
-const dropAnimation: DropAnimation = {
-  sideEffects: defaultDropAnimationSideEffects({
-    styles: {
-      active: {
-        opacity: '0.5'
-      }
-    }
-  })
-};
+const {PLACEHOLDER_ID, TRASH_ID, animateLayoutChanges, empty, dropAnimation, DroppableContainer} = useMCHook();
 
 function getColor(id: UniqueIdentifier) {
   switch (String(id)[0]) {
