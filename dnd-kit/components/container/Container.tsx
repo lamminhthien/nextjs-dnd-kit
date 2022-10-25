@@ -4,6 +4,8 @@ import classNames from 'classnames';
 import {Handle, Remove} from '../Item';
 
 import styles from './Container.module.scss';
+import ColumnTask from '../column-task';
+import ColumnHeader from '../column-header';
 
 export interface Props {
   children: React.ReactNode;
@@ -47,8 +49,6 @@ export const Container = forwardRef<HTMLElement | any, Props>(
     return (
       <Component
         {...props}
-        // Enable it to drag column, but build you will get error
-        // Disable also cause headache problem
         ref={ref}
         style={
           {
@@ -67,16 +67,8 @@ export const Container = forwardRef<HTMLElement | any, Props>(
         )}
         onClick={onClick}
         tabIndex={onClick ? 0 : undefined}>
-        {label ? (
-          <div className={styles.Header}>
-            {label}
-            <div className={styles.Actions}>
-              {onRemove ? <Remove onClick={onRemove} /> : undefined}
-              <Handle {...handleProps} />
-            </div>
-          </div>
-        ) : null}
-        {placeholder ? children : <ul>{children}</ul>}
+        {onRemove ? <ColumnHeader onRemove={onRemove} title={label!} /> : undefined}
+        {placeholder ? children : <ColumnTask>{children}</ColumnTask>}
       </Component>
     );
   }
