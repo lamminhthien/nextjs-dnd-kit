@@ -12,16 +12,6 @@ export type Items = Record<UniqueIdentifier, UniqueIdentifier[]>;
 const animateLayoutChanges: AnimateLayoutChanges = args => defaultAnimateLayoutChanges({...args, wasDragging: true});
 const empty: UniqueIdentifier[] = [];
 
-const dropAnimation: DropAnimation = {
-  sideEffects: defaultDropAnimationSideEffects({
-    styles: {
-      active: {
-        opacity: '0.5'
-      }
-    }
-  })
-};
-
 function DroppableContainer({
   children,
   columns = 1,
@@ -160,7 +150,6 @@ export default function useMCHook() {
     PLACEHOLDER_ID,
     animateLayoutChanges,
     empty,
-    dropAnimation,
     DroppableContainer,
     getColor,
     useMountStatus,

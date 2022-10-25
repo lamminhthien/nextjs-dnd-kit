@@ -29,13 +29,14 @@ import {createPortal, unstable_batchedUpdates} from 'react-dom';
 import {Item} from '../../components/Item';
 import {Container} from '../../components/Container';
 import useMCHook, {Items, SortableItemProps} from './hook';
+import {DropAnimation} from '@dnd-kit/core';
+import {dropAnimation} from '../../utilities/drop-animation';
 
 const {
   PLACEHOLDER_ID,
   TRASH_ID,
   animateLayoutChanges,
   empty,
-  dropAnimation,
   DroppableContainer,
   getColor,
   useMountStatus,
