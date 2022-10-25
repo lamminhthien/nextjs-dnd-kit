@@ -27,7 +27,7 @@ import {
 } from '@dnd-kit/core';
 import {createPortal, unstable_batchedUpdates} from 'react-dom';
 import {Item} from '../../dnd-kit/components/Item';
-import {ColumnBody} from '../../dnd-kit/components/column-body';
+import {ColumnContainer} from '../../dnd-kit/components/column-container';
 import {dropAnimation} from '../../dnd-kit/utilities/drop-animation';
 import {empty, PLACEHOLDER_ID, TRASH_ID} from '../../dnd-kit/utilities/constant';
 import {Items} from '../../dnd-kit/types/type';
@@ -412,7 +412,7 @@ export default function KanbanBoard({
 
   function renderContainerDragOverlay(containerId: UniqueIdentifier) {
     return (
-      <ColumnBody
+      <ColumnContainer
         label={`Column ${containerId}`}
         columns={columns}
         style={{
@@ -439,7 +439,7 @@ export default function KanbanBoard({
             renderItem={renderItem}
           />
         ))}
-      </ColumnBody>
+      </ColumnContainer>
     );
   }
 

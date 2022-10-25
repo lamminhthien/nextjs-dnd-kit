@@ -20,7 +20,7 @@ export interface Props {
 }
 
 // eslint-disable-next-line react/display-name
-export const ColumnBody = forwardRef<HTMLElement | any, Props>(
+export const ColumnContainer = forwardRef<HTMLElement | any, Props>(
   (
     {
       children,
@@ -64,7 +64,6 @@ export const ColumnBody = forwardRef<HTMLElement | any, Props>(
         onClick={onClick}
         tabIndex={onClick ? 0 : undefined}>
         <ColumnHeader onHandle={handleProps} onRemove={onRemove!} title={label!} />
-
         {placeholder ? children : <ul>{children}</ul>}
       </Component>
     );
