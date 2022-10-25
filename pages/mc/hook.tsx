@@ -4,12 +4,8 @@ import {Container, ContainerProps} from '../../components/Container';
 import {CSS} from '@dnd-kit/utilities';
 import {useEffect, useState} from 'react';
 import {Item} from '../../components/Item';
+import {animateLayoutChanges} from '../../utilities/animate-layout-change';
 
-export const TRASH_ID = 'void';
-const PLACEHOLDER_ID = 'placeholder';
-export type Items = Record<UniqueIdentifier, UniqueIdentifier[]>;
-
-const animateLayoutChanges: AnimateLayoutChanges = args => defaultAnimateLayoutChanges({...args, wasDragging: true});
 const empty: UniqueIdentifier[] = [];
 
 function DroppableContainer({
@@ -146,8 +142,6 @@ function SortableItem({
 
 export default function useMCHook() {
   return {
-    TRASH_ID,
-    PLACEHOLDER_ID,
     animateLayoutChanges,
     empty,
     DroppableContainer,

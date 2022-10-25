@@ -1,5 +1,5 @@
 import React, {useCallback, useEffect, useRef, useState} from 'react';
-import {coordinateGetter as multipleContainersCoordinateGetter} from './multipleContainersKeyboardCoordinates';
+import {coordinateGetter as multipleContainersCoordinateGetter} from '../../sensors/multipleContainersKeyboardCoordinates';
 import {
   arrayMove,
   SortableContext,
@@ -7,7 +7,7 @@ import {
   verticalListSortingStrategy,
   horizontalListSortingStrategy
 } from '@dnd-kit/sortable';
-import {IPropsMultiContainer} from './prop.type';
+import {IPropsMultiContainer} from '../../styles/prop.type';
 import {createRange} from '../../utilities/createRange';
 import {
   closestCenter,
@@ -28,20 +28,13 @@ import {
 import {createPortal, unstable_batchedUpdates} from 'react-dom';
 import {Item} from '../../components/Item';
 import {Container} from '../../components/Container';
-import useMCHook, {Items, SortableItemProps} from './hook';
+import useMCHook, {SortableItemProps} from './hook';
 import {DropAnimation} from '@dnd-kit/core';
 import {dropAnimation} from '../../utilities/drop-animation';
+import {PLACEHOLDER_ID, TRASH_ID} from '../../utilities/constant';
+import {Items} from '../../store/type';
 
-const {
-  PLACEHOLDER_ID,
-  TRASH_ID,
-  animateLayoutChanges,
-  empty,
-  DroppableContainer,
-  getColor,
-  useMountStatus,
-  SortableItem
-} =
+const {animateLayoutChanges, empty, DroppableContainer, getColor, useMountStatus, SortableItem} =
   // eslint-disable-next-line react-hooks/rules-of-hooks
   useMCHook();
 

@@ -47,6 +47,7 @@ export const Container = forwardRef<HTMLElement, Props>(
     return (
       <Component
         {...props}
+        // Enable it to drag column, but build you will get error
         // ref={ref}
         style={
           {
