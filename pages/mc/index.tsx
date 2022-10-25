@@ -34,14 +34,12 @@ import {createPortal, unstable_batchedUpdates} from 'react-dom';
 import {Item} from '../../components/Item';
 import {Container, ContainerProps} from '../../components/Container';
 import {CSS} from '@dnd-kit/utilities';
+import useMCHook from './hook';
+
+// eslint-disable-next-line react-hooks/rules-of-hooks
+const {PLACEHOLDER_ID, TRASH_ID, animateLayoutChanges, empty} = useMCHook();
 
 export type Items = Record<UniqueIdentifier, UniqueIdentifier[]>;
-
-export const TRASH_ID = 'void';
-const PLACEHOLDER_ID = 'placeholder';
-const empty: UniqueIdentifier[] = [];
-
-const animateLayoutChanges: AnimateLayoutChanges = args => defaultAnimateLayoutChanges({...args, wasDragging: true});
 
 function DroppableContainer({
   children,
@@ -140,8 +138,8 @@ export default function MultipleContainers({
       initialItems ?? {
         A: createRange(itemCount, index => `A${index + 1}`),
         B: createRange(itemCount, index => `B${index + 1}`),
-        C: createRange(itemCount, index => `C${index + 1}`),
-        D: createRange(itemCount, index => `D${index + 1}`)
+        C: createRange(itemCount, index => `C${index + 1}`)
+        // D: createRange(itemCount, index => `D${index + 1}`)
       }
   );
   // console.log(Object.keys(items));
