@@ -1,7 +1,114 @@
-import React from 'react';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {coordinateGetter as multipleContainersCoordinateGetter} from './multipleContainersKeyboardCoordinates';
-import {verticalListSortingStrategy} from '@dnd-kit/sortable';
+import {
+  arrayMove,
+  horizontalListSortingStrategy,
+  SortableContext,
+  useSortable,
+  verticalListSortingStrategy
+} from '@dnd-kit/sortable';
 import {IPropsMultiContainer} from './prop.type';
+import {createRange} from '../../utilities/createRange';
+import {
+  closestCenter,
+  CollisionDetection,
+  defaultDropAnimationSideEffects,
+  DndContext,
+  DragOverlay,
+  DropAnimation,
+  getFirstCollision,
+  KeyboardSensor,
+  MeasuringStrategy,
+  MouseSensor,
+  pointerWithin,
+  rectIntersection,
+  TouchSensor,
+  UniqueIdentifier,
+  useDroppable,
+  useSensor,
+  useSensors
+} from '@dnd-kit/core';
+import {createPortal, unstable_batchedUpdates} from 'react-dom';
+import {Item} from '../../components/Item';
+import {Container} from '../../components/Container';
+
+export type Items = Record<UniqueIdentifier, UniqueIdentifier[]>;
+
+export const TRASH_ID = 'void';
+const PLACEHOLDER_ID = 'placeholder';
+const empty: UniqueIdentifier[] = [];
+
+function DroppableContainer({
+  children,
+  columns = 1,
+  disabled,
+  id,
+  items,
+  style,
+  ...props
+}: ContainerProps & {
+  disabled?: boolean;
+  id: UniqueIdentifier;
+  items: UniqueIdentifier[];
+  style?: React.CSSProperties;
+}) {
+  const {active, attributes, isDragging, listeners, over, setNodeRef, transition, transform} = useSortable({
+    id,
+    data: {
+      type: 'container',
+      children: items
+    },
+    animateLayoutChanges
+  });
+  const isOverContainer = over
+    ? (id === over.id && active?.data.current?.type !== 'container') || items.includes(over.id)
+    : false;
+
+  return (
+    <Container
+      ref={disabled ? undefined : setNodeRef}
+      style={{
+        ...style,
+        transition,
+        transform: CSS.Translate.toString(transform),
+        opacity: isDragging ? 0.5 : undefined
+      }}
+      hover={isOverContainer}
+      handleProps={{
+        ...attributes,
+        ...listeners
+      }}
+      columns={columns}
+      {...props}>
+      {children}
+    </Container>
+  );
+}
+
+const dropAnimation: DropAnimation = {
+  sideEffects: defaultDropAnimationSideEffects({
+    styles: {
+      active: {
+        opacity: '0.5'
+      }
+    }
+  })
+};
+
+function getColor(id: UniqueIdentifier) {
+  switch (String(id)[0]) {
+    case 'A':
+      return '#7193f0';
+    case 'B':
+      return '#ffda6c';
+    case 'C':
+      return '#00bcd4';
+    case 'D':
+      return '#ef769f';
+  }
+
+  return undefined;
+}
 
 export default function MultipleContainers({
   adjustScale = false,
@@ -428,4 +535,101 @@ export default function MultipleContainers({
 
     return String.fromCharCode(lastContainerId.charCodeAt(0) + 1);
   }
+}
+
+interface SortableItemProps {
+  containerId: UniqueIdentifier;
+  id: UniqueIdentifier;
+  index: number;
+  handle: boolean;
+  disabled?: boolean;
+  style(args: any): React.CSSProperties;
+  getIndex(id: UniqueIdentifier): number;
+  renderItem(): React.ReactElement;
+  wrapperStyle({index}: {index: number}): React.CSSProperties;
+}
+
+function SortableItem({
+  disabled,
+  id,
+  index,
+  handle,
+  renderItem,
+  style,
+  containerId,
+  getIndex,
+  wrapperStyle
+}: SortableItemProps) {
+  const {setNodeRef, setActivatorNodeRef, listeners, isDragging, isSorting, over, overIndex, transform, transition} =
+    useSortable({
+      id
+    });
+  const mounted = useMountStatus();
+  const mountedWhileDragging = isDragging && !mounted;
+
+  return (
+    <Item
+      ref={disabled ? undefined : setNodeRef}
+      value={id}
+      dragging={isDragging}
+      sorting={isSorting}
+      handle={handle}
+      handleProps={handle ? {ref: setActivatorNodeRef} : undefined}
+      index={index}
+      wrapperStyle={wrapperStyle({index})}
+      style={style({
+        index,
+        value: id,
+        isDragging,
+        isSorting,
+        overIndex: over ? getIndex(over.id) : overIndex,
+        containerId
+      })}
+      color={getColor(id)}
+      transition={transition}
+      transform={transform}
+      fadeIn={mountedWhileDragging}
+      listeners={listeners}
+      renderItem={renderItem}
+    />
+  );
+}
+
+function Trash({id}: {id: UniqueIdentifier}) {
+  const {setNodeRef, isOver} = useDroppable({
+    id
+  });
+
+  return (
+    <div
+      ref={setNodeRef}
+      style={{
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        position: 'fixed',
+        left: '50%',
+        marginLeft: -150,
+        bottom: 20,
+        width: 300,
+        height: 60,
+        borderRadius: 5,
+        border: '2px solid',
+        borderColor: isOver ? 'red' : '#DDD'
+      }}>
+      Drop here to delete
+    </div>
+  );
+}
+
+function useMountStatus() {
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    const timeout = setTimeout(() => setIsMounted(true), 500);
+
+    return () => clearTimeout(timeout);
+  }, []);
+
+  return isMounted;
 }
