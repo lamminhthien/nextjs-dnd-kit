@@ -20,7 +20,7 @@ export interface Props {
 }
 
 // eslint-disable-next-line react/display-name
-export const Container = forwardRef<HTMLElement | any, Props>(
+export const ColumnBody = forwardRef<HTMLElement | any, Props>(
   (
     {
       children,

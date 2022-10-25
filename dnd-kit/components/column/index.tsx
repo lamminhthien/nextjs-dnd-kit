@@ -1,5 +1,5 @@
 import {UniqueIdentifier} from '@dnd-kit/core';
-import {Container, ContainerProps} from '../column-body';
+import {ColumnBody, ContainerProps} from '../column-body';
 import {animateLayoutChanges} from '../../utilities/animate-layout-change';
 import {CSS} from '../../utilities/css';
 import {useSortable} from '@dnd-kit/sortable';
@@ -31,7 +31,7 @@ export default function Column({
     : false;
 
   return (
-    <Container
+    <ColumnBody
       ref={disabled ? undefined : setNodeRef}
       style={{
         ...style,
@@ -47,6 +47,6 @@ export default function Column({
       columns={columns}
       {...props}>
       {children}
-    </Container>
+    </ColumnBody>
   );
 }
