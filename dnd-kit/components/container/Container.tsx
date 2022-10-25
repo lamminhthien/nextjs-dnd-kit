@@ -22,7 +22,7 @@ export interface Props {
 }
 
 // eslint-disable-next-line react/display-name
-export const Container = forwardRef<HTMLElement, Props>(
+export const Container = forwardRef<HTMLElement | any, Props>(
   (
     {
       children,
@@ -42,14 +42,14 @@ export const Container = forwardRef<HTMLElement, Props>(
     }: Props,
     ref
   ) => {
-    const Component = onClick ? 'button' : 'div';
+    const Component = 'div';
 
     return (
       <Component
         {...props}
         // Enable it to drag column, but build you will get error
         // Disable also cause headache problem
-        // ref={ref}
+        ref={ref}
         style={
           {
             ...style,
