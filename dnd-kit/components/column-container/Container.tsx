@@ -67,8 +67,9 @@ export const Container = forwardRef<HTMLElement | any, Props>(
         )}
         onClick={onClick}
         tabIndex={onClick ? 0 : undefined}>
-        {onRemove ? <ColumnHeader onHandle={handleProps} onRemove={onRemove} title={label!} /> : undefined}
-        {placeholder ? children : <ColumnBody>{children}</ColumnBody>}
+        <ColumnHeader onHandle={handleProps} onRemove={onRemove!} title={label!} />
+
+        {placeholder ? children : <ul>{children}</ul>}
       </Component>
     );
   }

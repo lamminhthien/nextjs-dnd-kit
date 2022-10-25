@@ -27,7 +27,7 @@ import {
 } from '@dnd-kit/core';
 import {createPortal, unstable_batchedUpdates} from 'react-dom';
 import {Item} from '../../dnd-kit/components/Item';
-import {Container} from '../../dnd-kit/components/container';
+import {Container} from '../../dnd-kit/components/column-container';
 import {dropAnimation} from '../../dnd-kit/utilities/drop-animation';
 import {empty, PLACEHOLDER_ID, TRASH_ID} from '../../dnd-kit/utilities/constant';
 import {Items} from '../../dnd-kit/types/type';
