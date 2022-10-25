@@ -26,14 +26,14 @@ import {
   getFirstCollision
 } from '@dnd-kit/core';
 import {createPortal, unstable_batchedUpdates} from 'react-dom';
-import {Item} from '../../components/Item';
-import {Container} from '../../components/Container';
+import {Item} from '../../dnd-kit/components/Item';
+import {Container} from '../../dnd-kit/components/container';
 import {dropAnimation} from '../../utilities/drop-animation';
 import {empty, PLACEHOLDER_ID, TRASH_ID} from '../../utilities/constant';
 import {Items} from '../../store/type';
-import SortableItem from '../../components/sortable-item';
+import SortableItem from '../../dnd-kit/components/sortable-item';
 import getColor from '../../utilities/get-color';
-import DroppableContainer from '../../components/droppable-container';
+import DroppableContainer from '../../dnd-kit/components/droppable-container';
 
 export default function MultipleContainers({
   adjustScale = false,
