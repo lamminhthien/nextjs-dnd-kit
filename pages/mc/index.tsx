@@ -30,7 +30,7 @@ import {Item} from '../../dnd-kit/components/Item';
 import {Container} from '../../dnd-kit/components/container';
 import {dropAnimation} from '../../dnd-kit/utilities/drop-animation';
 import {empty, PLACEHOLDER_ID, TRASH_ID} from '../../dnd-kit/utilities/constant';
-import {Items} from '../../store/type';
+import {Items} from '../../dnd-kit/types/type';
 import SortableItem from '../../dnd-kit/components/sortable-item';
 import getColor from '../../dnd-kit/utilities/get-color';
 import DroppableContainer from '../../dnd-kit/components/droppable-container';
