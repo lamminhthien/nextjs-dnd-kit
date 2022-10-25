@@ -4,7 +4,7 @@ import getColor from '../../utilities/get-color';
 import useMountStatus from '../../utilities/use-mount-status';
 import {Item} from '../Item';
 
-export default function SortableItem({
+export default function Task({
   disabled,
   id,
   index,

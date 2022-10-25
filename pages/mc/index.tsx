@@ -31,11 +31,11 @@ import {Container} from '../../dnd-kit/components/container';
 import {dropAnimation} from '../../dnd-kit/utilities/drop-animation';
 import {empty, PLACEHOLDER_ID, TRASH_ID} from '../../dnd-kit/utilities/constant';
 import {Items} from '../../dnd-kit/types/type';
-import SortableItem from '../../dnd-kit/components/sortable-item';
+import Task from '../../dnd-kit/components/task';
 import getColor from '../../dnd-kit/utilities/get-color';
-import DroppableContainer from '../../dnd-kit/components/droppable-container';
+import Column from '../../dnd-kit/components/column';
 
-export default function MultipleContainers({
+export default function KanbanBoard({
   adjustScale = false,
   itemCount = 3, // Số lượng item Count trong mỗi hàng
   cancelDrop,
@@ -333,7 +333,7 @@ export default function MultipleContainers({
             items={[...containers, PLACEHOLDER_ID]}
             strategy={vertical ? verticalListSortingStrategy : horizontalListSortingStrategy}>
             {containers.map(containerId => (
-              <DroppableContainer
+              <Column
                 key={containerId}
                 id={containerId}
                 label={minimal ? undefined : `Column ${containerId}`}
@@ -346,7 +346,7 @@ export default function MultipleContainers({
                 <SortableContext items={items[containerId]} strategy={strategy}>
                   {items[containerId].map((value, index) => {
                     return (
-                      <SortableItem
+                      <Task
                         disabled={isSortingContainer}
                         key={value}
                         id={value}
@@ -361,17 +361,17 @@ export default function MultipleContainers({
                     );
                   })}
                 </SortableContext>
-              </DroppableContainer>
+              </Column>
             ))}
             {minimal ? undefined : (
-              <DroppableContainer
+              <Column
                 id={PLACEHOLDER_ID}
                 disabled={isSortingContainer}
                 items={empty}
                 onClick={handleAddColumn}
                 placeholder>
                 + Add column
-              </DroppableContainer>
+              </Column>
             )}
           </SortableContext>
         </div>

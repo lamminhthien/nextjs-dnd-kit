@@ -1,8 +1,8 @@
 import React, {ReactNode} from 'react';
-interface IColumnTask {
+interface IColumnBody {
   children: ReactNode;
 }
 
-export default function ColumnTask({children}: IColumnTask) {
+export default function ColumnBody({children}: IColumnBody) {
   return <ul>{children}</ul>;
 }

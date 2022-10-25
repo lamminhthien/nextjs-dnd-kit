@@ -3,15 +3,10 @@ import {
   getFirstCollision,
   KeyboardCode,
   DroppableContainer,
-  KeyboardCoordinateGetter,
+  KeyboardCoordinateGetter
 } from '@dnd-kit/core';
 
-const directions: string[] = [
-  KeyboardCode.Down,
-  KeyboardCode.Right,
-  KeyboardCode.Up,
-  KeyboardCode.Left,
-];
+const directions: string[] = [KeyboardCode.Down, KeyboardCode.Right, KeyboardCode.Up, KeyboardCode.Left];
 
 export const coordinateGetter: KeyboardCoordinateGetter = (
   event,
@@ -26,7 +21,7 @@ export const coordinateGetter: KeyboardCoordinateGetter = (
 
     const filteredContainers: DroppableContainer[] = [];
 
-    droppableContainers.getEnabled().forEach((entry) => {
+    droppableContainers.getEnabled().forEach(entry => {
       if (!entry || entry?.disabled) {
         return;
       }
@@ -78,7 +73,7 @@ export const coordinateGetter: KeyboardCoordinateGetter = (
       collisionRect: collisionRect,
       droppableRects,
       droppableContainers: filteredContainers,
-      pointerCoordinates: null,
+      pointerCoordinates: null
     });
     const closestId = getFirstCollision(collisions, 'id');
 
@@ -91,20 +86,20 @@ export const coordinateGetter: KeyboardCoordinateGetter = (
         if (newDroppable.id === 'placeholder') {
           return {
             x: newRect.left + (newRect.width - collisionRect.width) / 2,
-            y: newRect.top + (newRect.height - collisionRect.height) / 2,
+            y: newRect.top + (newRect.height - collisionRect.height) / 2
           };
         }
 
         if (newDroppable.data.current?.type === 'container') {
           return {
             x: newRect.left + 20,
-            y: newRect.top + 74,
+            y: newRect.top + 74
           };
         }
 
         return {
           x: newRect.left,
-          y: newRect.top,
+          y: newRect.top
         };
       }
     }

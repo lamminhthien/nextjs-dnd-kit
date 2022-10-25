@@ -4,7 +4,7 @@ import {animateLayoutChanges} from '../../utilities/animate-layout-change';
 import {CSS} from '../../utilities/css';
 import {useSortable} from '@dnd-kit/sortable';
 
-export default function DroppableContainer({
+export default function Column({
   children,
   columns = 1,
   disabled,

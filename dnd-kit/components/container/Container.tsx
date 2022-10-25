@@ -4,7 +4,7 @@ import classNames from 'classnames';
 import {Handle, Remove} from '../Item';
 
 import styles from './Container.module.scss';
-import ColumnTask from '../column-task';
+import ColumnBody from '../column-body';
 import ColumnHeader from '../column-header';
 
 export interface Props {
@@ -67,8 +67,8 @@ export const Container = forwardRef<HTMLElement | any, Props>(
         )}
         onClick={onClick}
         tabIndex={onClick ? 0 : undefined}>
-        {onRemove ? <ColumnHeader onRemove={onRemove} title={label!} /> : undefined}
-        {placeholder ? children : <ColumnTask>{children}</ColumnTask>}
+        {onRemove ? <ColumnHeader onHandle={handleProps} onRemove={onRemove} title={label!} /> : undefined}
+        {placeholder ? children : <ColumnBody>{children}</ColumnBody>}
       </Component>
     );
   }
