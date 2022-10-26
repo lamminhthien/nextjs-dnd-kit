@@ -5,7 +5,7 @@ import {Items} from '../../types/type';
 import {empty, PLACEHOLDER_ID} from '../../utilities/constant';
 import Column from '../column';
 import Task from '../task';
-interface IColumnBody {
+interface IKanbanBoard {
   data: UniqueIdentifier[];
   strategy: SortingStrategy;
   minimal: boolean;
@@ -23,7 +23,7 @@ interface IColumnBody {
   handleAddColumn: () => void;
 }
 
-export default function ColumnBody({
+export default function KanbanBoard({
   data,
   strategy,
   minimal,
@@ -39,40 +39,42 @@ export default function ColumnBody({
   renderItem,
   getIndex,
   handleAddColumn
-}: IColumnBody) {
+}: IKanbanBoard) {
   return (
-    <div className='column-body'>
+    <div className='kanban-board'>
       <SortableContext items={data} strategy={strategy}>
         {data.map(containerId => (
-          <Column
-            key={containerId}
-            id={containerId}
-            label={minimal ? undefined : `Column ${containerId}`}
-            columns={columns}
-            items={items[containerId]}
-            scrollable={scrollable}
-            style={containerStyle}
-            unstyled={minimal}
-            onRemove={() => handleRemove(containerId)}>
-            <SortableContext items={items[containerId]} strategy={strategy}>
-              {items[containerId].map((value, index) => {
-                return (
-                  <Task
-                    disabled={isSortingContainer}
-                    key={value}
-                    id={value}
-                    index={index}
-                    handle={handle}
-                    style={getItemStyles}
-                    wrapperStyle={wrapperStyle}
-                    renderItem={renderItem}
-                    containerId={containerId}
-                    getIndex={getIndex}
-                  />
-                );
-              })}
-            </SortableContext>
-          </Column>
+          <div className='kanban-column' key={containerId}>
+            <Column
+              key={containerId}
+              id={containerId}
+              label={minimal ? undefined : `Column ${containerId}`}
+              columns={columns}
+              items={items[containerId]}
+              scrollable={scrollable}
+              style={containerStyle}
+              unstyled={minimal}
+              onRemove={() => handleRemove(containerId)}>
+              <SortableContext items={items[containerId]} strategy={strategy}>
+                {items[containerId].map((value, index) => {
+                  return (
+                    <Task
+                      disabled={isSortingContainer}
+                      key={value}
+                      id={value}
+                      index={index}
+                      handle={handle}
+                      style={getItemStyles}
+                      wrapperStyle={wrapperStyle}
+                      renderItem={renderItem}
+                      containerId={containerId}
+                      getIndex={getIndex}
+                    />
+                  );
+                })}
+              </SortableContext>
+            </Column>
+          </div>
         ))}
         {minimal ? undefined : (
           <Column id={PLACEHOLDER_ID} disabled={isSortingContainer} items={empty} onClick={handleAddColumn} placeholder>

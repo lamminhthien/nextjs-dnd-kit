@@ -34,9 +34,9 @@ import {Items} from '../../dnd-kit/types/type';
 import Task from '../../dnd-kit/components/task';
 import getColor from '../../dnd-kit/utilities/get-color';
 import Column from '../../dnd-kit/components/column';
-import ColumnBody from '../../dnd-kit/components/column-body';
+import KanbanBoard from '../../dnd-kit/components/kanban-column';
 
-export default function KanbanBoard({
+export default function KanbanBoardPage({
   adjustScale = false,
   itemCount = 3, // Số lượng item Count trong mỗi hàng
   cancelDrop,
@@ -330,7 +330,7 @@ export default function KanbanBoard({
             padding: 20,
             gridAutoFlow: vertical ? 'row' : 'column'
           }}>
-          <ColumnBody
+          <KanbanBoard
             columns={columns!}
             containerStyle={containerStyle!}
             items={items}
