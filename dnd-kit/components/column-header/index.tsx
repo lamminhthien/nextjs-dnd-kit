@@ -8,7 +8,7 @@ interface IColumnHeader {
 
 export default function ColumnHeader({title, onRemove, onHandle}: IColumnHeader) {
   return (
-    <div className='kanban-header'>
+    <div className='column-header'>
       {title ? (
         <>
           <div className='column-title'>Column {title}</div>
