@@ -34,6 +34,7 @@ import {Items} from '../../dnd-kit/types/type';
 import Task from '../../dnd-kit/components/task';
 import getColor from '../../dnd-kit/utilities/get-color';
 import Column from '../../dnd-kit/components/column';
+import ColumnBody from '../../dnd-kit/components/column-body';
 
 export default function KanbanBoard({
   adjustScale = false,
@@ -329,51 +330,23 @@ export default function KanbanBoard({
             padding: 20,
             gridAutoFlow: vertical ? 'row' : 'column'
           }}>
-          <SortableContext
-            items={[...containers, PLACEHOLDER_ID]}
-            strategy={vertical ? verticalListSortingStrategy : horizontalListSortingStrategy}>
-            {containers.map(containerId => (
-              <Column
-                key={containerId}
-                id={containerId}
-                label={minimal ? undefined : `Column ${containerId}`}
-                columns={columns}
-                items={items[containerId]}
-                scrollable={scrollable}
-                style={containerStyle}
-                unstyled={minimal}
-                onRemove={() => handleRemove(containerId)}>
-                <SortableContext items={items[containerId]} strategy={strategy}>
-                  {items[containerId].map((value, index) => {
-                    return (
-                      <Task
-                        disabled={isSortingContainer}
-                        key={value}
-                        id={value}
-                        index={index}
-                        handle={handle}
-                        style={getItemStyles}
-                        wrapperStyle={wrapperStyle}
-                        renderItem={renderItem}
-                        containerId={containerId}
-                        getIndex={getIndex}
-                      />
-                    );
-                  })}
-                </SortableContext>
-              </Column>
-            ))}
-            {minimal ? undefined : (
-              <Column
-                id={PLACEHOLDER_ID}
-                disabled={isSortingContainer}
-                items={empty}
-                onClick={handleAddColumn}
-                placeholder>
-                + Add column
-              </Column>
-            )}
-          </SortableContext>
+          <ColumnBody
+            columns={columns!}
+            containerStyle={containerStyle!}
+            items={items}
+            data={containers}
+            getIndex={getIndex}
+            getItemStyles={getItemStyles}
+            handle={handle}
+            handleAddColumn={handleAddColumn}
+            handleRemove={handleRemove}
+            isSortingContainer={isSortingContainer}
+            minimal={minimal}
+            renderItem={renderItem}
+            scrollable={scrollable!}
+            strategy={vertical ? verticalListSortingStrategy : horizontalListSortingStrategy}
+            wrapperStyle={wrapperStyle}
+          />
         </div>
         {createPortal(
           <DragOverlay adjustScale={adjustScale} dropAnimation={dropAnimation}>

@@ -2,6 +2,7 @@ import {UniqueIdentifier} from '@dnd-kit/core';
 import {SortableContext, SortingStrategy} from '@dnd-kit/sortable';
 import React from 'react';
 import {Items} from '../../types/type';
+import {empty, PLACEHOLDER_ID} from '../../utilities/constant';
 import Column from '../column';
 import Task from '../task';
 interface IColumnBody {
@@ -13,6 +14,13 @@ interface IColumnBody {
   containerStyle: React.CSSProperties;
   items: Items;
   handleRemove: (containerId: UniqueIdentifier) => void;
+  isSortingContainer: boolean;
+  handle: boolean;
+  wrapperStyle({index}: {index: number}): React.CSSProperties;
+  getItemStyles({index}: {index: number}): React.CSSProperties;
+  renderItem: any;
+  getIndex: (id: UniqueIdentifier) => number;
+  handleAddColumn: () => void;
 }
 
 export default function ColumnBody({
@@ -23,7 +31,14 @@ export default function ColumnBody({
   scrollable,
   containerStyle,
   items,
-  handleRemove
+  handleRemove,
+  isSortingContainer,
+  handle,
+  wrapperStyle,
+  getItemStyles,
+  renderItem,
+  getIndex,
+  handleAddColumn
 }: IColumnBody) {
   return (
     <div className='column-body'>
