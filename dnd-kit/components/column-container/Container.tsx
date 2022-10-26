@@ -53,7 +53,7 @@ export const ColumnContainer = forwardRef<HTMLElement | any, Props>(
           } as React.CSSProperties
         }
         className={classNames(
-          styles.Container,
+          styles['Kanban-Column'],
           unstyled && styles.unstyled,
           horizontal && styles.horizontal,
           hover && styles.hover,
@@ -64,7 +64,7 @@ export const ColumnContainer = forwardRef<HTMLElement | any, Props>(
         onClick={onClick}
         tabIndex={onClick ? 0 : undefined}>
         <ColumnHeader onHandle={handleProps} onRemove={onRemove!} title={label!} />
-        {placeholder ? children : <ul>{children}</ul>}
+        {/* {placeholder ? children : <ul>{children}</ul>} */}
       </Component>
     );
   }
